@@ -40,10 +40,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.action_settings -> {
+        /*R.id.action_settings -> {
 
             true
-        }
+        }*/
 
         R.id.action_calendar -> {
             // DatePickerDialog months range from 0-11
@@ -54,9 +54,16 @@ class MainActivity : AppCompatActivity() {
             val dpd = DatePickerDialog(this, { view, year, month, dayOfMonth ->
                 val adjusted_month = month + 1
 
+                // @TODO("Clean this hacky shit up")
                 var date_string = "$year-$adjusted_month-$dayOfMonth"
                 if (dayOfMonth < 10) {
                     date_string = "$year-$adjusted_month-0$dayOfMonth"
+                }
+                if (adjusted_month < 10) {
+                    date_string = "$year-0$adjusted_month-$dayOfMonth"
+                }
+                if (adjusted_month < 10 && dayOfMonth < 10) {
+                    date_string = "$year-0$adjusted_month-0$dayOfMonth"
                 }
 
                 var formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy")

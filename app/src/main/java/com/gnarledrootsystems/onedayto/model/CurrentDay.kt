@@ -11,15 +11,6 @@ object CurrentDay {
     private var _selected_date: String = ""
     private var _day: Day = Day()
 
-    fun setDefaults() {
-        _selected_date = LocalDate.now().toString()
-        _day = Day(
-            _selected_date,
-            HourBlockContent.default_hours_json(),
-            HourBlockContent.DEFAULT_HOURS
-        )
-    }
-
     fun getDay(): Day {
         return _day
     }

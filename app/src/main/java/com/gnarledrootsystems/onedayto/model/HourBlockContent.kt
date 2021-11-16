@@ -14,9 +14,9 @@ object HourBlockContent {
     var DEFAULT_TASKS: MutableList<TaskItem> = mutableListOf(
         TaskItem(0, "#FFFFFF", "", 0, false),
         TaskItem(1, "#57838D", "sleep", 1, false),
-        TaskItem(2, "#F3BFB3", "work work", 2, false),
+        TaskItem(2, "#F3BFB3", "work", 2, false),
         TaskItem(3, "#50B4D8", "chores", 3, false),
-        TaskItem(4, "#CAB3C1", "studying", 4, false),
+        TaskItem(4, "#CAB3C1", "study", 4, false),
         TaskItem(5, "#A7D9C9", "leisure", 5, false),
         TaskItem(6, "#D3C0F9", "other", 6, false),
     )
@@ -68,8 +68,4 @@ object HourBlockContent {
         @ColumnInfo(name = "order") var order: Int,
         @ColumnInfo(name = "is_hidden") var isHidden: Boolean
     )
-
-    fun loadDay(date: String = LocalDate.now().toString()) {
-
-    }
 }

@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gnarledrootsystems.onedayto.model.CurrentDay
 import java.time.LocalDate
 
-/**
- * A fragment representing a list of Items.
- */
 class HourFragment : Fragment() {
 
     private var columnCount = 8
