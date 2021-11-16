@@ -2,23 +2,14 @@ package com.gnarledrootsystems.onedayto
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.room.Room
-import androidx.room.RoomSQLiteQuery
 import com.gnarledrootsystems.onedayto.model.CurrentDay
-import com.gnarledrootsystems.onedayto.model.Day
-import com.gnarledrootsystems.onedayto.model.HourBlockContent
-import com.gnarledrootsystems.onedayto.placeholder.PlaceholderContent
-import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import java.lang.Exception
 import java.time.LocalDate
 
 /**
@@ -27,12 +18,14 @@ import java.time.LocalDate
 class HourFragment : Fragment() {
 
     private var columnCount = 8
+    private lateinit var dateString: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
+            dateString = it.getString(ARG_DATE_STRING).toString()
         }
     }
 
@@ -40,12 +33,12 @@ class HourFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_hour_list, container, false)
 
-        // Decode json string back to List of HourBlocks
-        // val json_rev = Json.decodeFromString<MutableList<HourBlockContent.HourBlock>>(json)
+        var selected_date = LocalDate.now()
+        if (dateString != "null") {
+            selected_date = LocalDate.parse(dateString)
+        }
 
-        //CurrentDay.insertAndRetrieveDay(requireContext(), LocalDate.now().toString())
-        // Initialize CurrentDay Singleton
-        CurrentDay.insertAndRetrieveDay(requireContext())
+        CurrentDay.insertAndRetrieveDay(requireContext(), selected_date.toString())
 
         if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
             columnCount = 4
@@ -63,6 +56,7 @@ class HourFragment : Fragment() {
                 adapter = CurrentDay.getDay().editable_hours?.let { MyHourRecyclerViewAdapter(it) }
             }
         }
+
         return view
     }
 
@@ -70,6 +64,7 @@ class HourFragment : Fragment() {
 
         // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
+        const val ARG_DATE_STRING = "date_string"
 
         // TODO: Customize parameter initialization
         @JvmStatic

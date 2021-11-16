@@ -9,5 +9,13 @@
         android:id="@+id/hourFragment"
         android:name="com.gnarledrootsystems.onedayto.HourFragment"
         android:label="fragment_hour_list"
-        tools:layout="@layout/fragment_hour_list" />
+        tools:layout="@layout/fragment_hour_list" >
+        <action
+            android:id="@+id/action_hourFragment_self"
+            app:destination="@id/hourFragment"
+            app:enterAnim="@android:anim/fade_in" />
+        <argument
+            android:name="date_string"
+            app:argType="string" />
+    </fragment>
 </navigation>

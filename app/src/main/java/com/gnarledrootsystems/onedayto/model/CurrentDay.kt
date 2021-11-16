@@ -8,8 +8,8 @@ import java.time.LocalDate
 
 object CurrentDay {
 
-    private lateinit var _selected_date: String
-    private lateinit var _day: Day
+    private var _selected_date: String = ""
+    private var _day: Day = Day()
 
     fun setDefaults() {
         _selected_date = LocalDate.now().toString()
@@ -28,7 +28,7 @@ object CurrentDay {
         return _selected_date
     }
 
-    fun insertAndRetrieveDay(context: Context, date: String? = null) {
+    fun insertAndRetrieveDay(context: Context, date: String) {
         runBlocking {
             val db = Room.databaseBuilder(
                 context,
@@ -37,16 +37,20 @@ object CurrentDay {
 
             val dayDao = db.dayDao()
 
-            if (date == null) {
-                setDefaults()
-            } else {
+            val day = dayDao.findByDate(date)
+
+            if (day == null) {
                 _day.date = date
+                _day.hours = HourBlockContent.default_hours_json()
+
+                dayDao.insert(_day)
+            } else {
+                _day.date = day.date
+                _day.hours = day.hours
             }
 
-            dayDao.insert(_day)
-            _day = dayDao.findByDate(_day.date)
-
             _day.editable_hours = _day.json_hours_to_list()
+            _selected_date = date
         }
     }
 
