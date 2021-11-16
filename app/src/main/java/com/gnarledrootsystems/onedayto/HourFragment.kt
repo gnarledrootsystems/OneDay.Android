@@ -9,8 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.room.Room
+import androidx.room.RoomSQLiteQuery
+import com.gnarledrootsystems.onedayto.model.CurrentDay
+import com.gnarledrootsystems.onedayto.model.Day
 import com.gnarledrootsystems.onedayto.model.HourBlockContent
 import com.gnarledrootsystems.onedayto.placeholder.PlaceholderContent
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.lang.Exception
+import java.time.LocalDate
 
 /**
  * A fragment representing a list of Items.
@@ -31,6 +40,13 @@ class HourFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_hour_list, container, false)
 
+        // Decode json string back to List of HourBlocks
+        // val json_rev = Json.decodeFromString<MutableList<HourBlockContent.HourBlock>>(json)
+
+        //CurrentDay.insertAndRetrieveDay(requireContext(), LocalDate.now().toString())
+        // Initialize CurrentDay Singleton
+        CurrentDay.insertAndRetrieveDay(requireContext())
+
         if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
             columnCount = 4
         } else {
@@ -44,7 +60,7 @@ class HourFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyHourRecyclerViewAdapter(HourBlockContent.HOURS)
+                adapter = CurrentDay.getDay().editable_hours?.let { MyHourRecyclerViewAdapter(it) }
             }
         }
         return view

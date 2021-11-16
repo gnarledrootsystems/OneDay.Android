@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 
 import com.gnarledrootsystems.onedayto.placeholder.PlaceholderContent.PlaceholderItem
 import com.gnarledrootsystems.onedayto.databinding.FragmentHourBinding
+import com.gnarledrootsystems.onedayto.model.CurrentDay
 import com.gnarledrootsystems.onedayto.model.HourBlockContent
 import java.util.*
 
@@ -42,14 +43,19 @@ class MyHourRecyclerViewAdapter(
 
 
         holder.itemView.setOnClickListener { view ->
-            val current_task_id = HourBlockContent.TASKS.indexOf(hour_block.task)
+            val selected_block_id = hour_block.id
+
+            val current_task_id = HourBlockContent.DEFAULT_TASKS.indexOf(hour_block.task)
             val next_task_id = current_task_id + 1
 
-            if (next_task_id < HourBlockContent.TASKS.size) {
-                hour_block.task = HourBlockContent.TASKS.get(next_task_id)
+            if (next_task_id < HourBlockContent.DEFAULT_TASKS.size) {
+                hour_block.task = HourBlockContent.DEFAULT_TASKS.get(next_task_id)
             } else {
-                hour_block.task = HourBlockContent.TASKS.first()
+                hour_block.task = HourBlockContent.DEFAULT_TASKS.first()
             }
+
+            CurrentDay.getDay().editable_hours?.get(selected_block_id)?.task = hour_block.task
+            CurrentDay.updateDB(view.context)
 
             holder.itemView.setBackgroundColor(Color.parseColor(hour_block.task.color))
             holder.blockDescription.text = hour_block.task.description.uppercase()
