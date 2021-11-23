@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hourLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="16.66"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/block_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:maxLength="7"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+        android:id="@+id/block_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:maxLength="7"
+        android:textAppearance="?attr/textAppearanceListItem" />
+</LinearLayout>

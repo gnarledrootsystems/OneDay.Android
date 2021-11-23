@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/hourFragment">
+
+    <fragment
+        android:id="@+id/hourFragment"
+        android:name="com.gnarledrootsystems.onedayto.HourFragment"
+        android:label="fragment_hour_list"
+        tools:layout="@layout/fragment_hour_list" >
+        <action
+            android:id="@+id/action_hourFragment_self"
+            app:destination="@id/hourFragment"
+            app:enterAnim="@android:anim/fade_in" />
+        <argument
+            android:name="date_string"
+            app:argType="string" />
+    </fragment>
+</navigation>
