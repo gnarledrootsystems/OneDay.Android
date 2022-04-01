@@ -38,8 +38,13 @@ class MyHourRecyclerViewAdapter(
 
             val hourTaskItemDao = db.hourTaskItemDao()
 
-            var hourTaskItemsTest = hourTaskItemDao.getAll()
-            hourTaskItems = HourBlockContent.EMPTY_TASK + hourTaskItemsTest
+            val hourTaskItemsFromDatabase = hourTaskItemDao.getAll()
+
+            hourTaskItemsFromDatabase.removeAll { it ->
+                it.isHidden
+            }
+
+            hourTaskItems = HourBlockContent.EMPTY_TASK + hourTaskItemsFromDatabase
             val test = "test"
         }
 
