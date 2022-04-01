@@ -44,8 +44,11 @@ class MyHourRecyclerViewAdapter(
                 it.isHidden
             }
 
+            hourTaskItemsFromDatabase.removeAll { it ->
+                it.isDeleted
+            }
+
             hourTaskItems = HourBlockContent.EMPTY_TASK + hourTaskItemsFromDatabase
-            val test = "test"
         }
 
         return ViewHolder(FragmentHourBinding.inflate(LayoutInflater.from(parent.context), parent, false))

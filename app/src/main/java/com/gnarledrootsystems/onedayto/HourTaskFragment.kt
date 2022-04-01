@@ -72,6 +72,10 @@ class HourTaskFragment : Fragment() {
 
         val allHourTaskItems: MutableList<HourTaskItem> = hourTaskItems
 
+        allHourTaskItems.removeAll { it ->
+            it.isDeleted
+        }
+
         // Set the adapter
         if (view.listTaskItems is RecyclerView) {
             with(view.listTaskItems) {
