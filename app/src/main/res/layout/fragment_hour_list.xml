@@ -5,7 +5,7 @@
     android:id="@+id/hour_block_list"
     android:name="com.gnarledrootsystems.onedayto.HourFragment"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:layout_rowWeight="16.66"
     android:layout_weight="100"
     app:layoutManager="LinearLayoutManager"

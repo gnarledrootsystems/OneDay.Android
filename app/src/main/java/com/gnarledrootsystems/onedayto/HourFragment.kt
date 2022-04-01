@@ -5,17 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import com.gnarledrootsystems.onedayto.databinding.ActivityMainBinding
+import com.gnarledrootsystems.onedayto.databinding.FragmentHourBinding
 import com.gnarledrootsystems.onedayto.model.CurrentDay
+import com.gnarledrootsystems.onedayto.model.HourBlockContent
+import com.gnarledrootsystems.onedayto.model.HourTaskItem
+import kotlinx.android.synthetic.main.fragment_hour_list.view.*
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class HourFragment : Fragment() {
 
     private var columnCount = 8
     private lateinit var dateString: String
+    private lateinit var binding: FragmentHourBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +40,28 @@ class HourFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_hour_list, container, false)
 
+        (requireActivity() as AppCompatActivity).supportActionBar?.setHomeButtonEnabled(false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        // Set up Default Tasks in the DB
+        runBlocking {
+            val db = Room.databaseBuilder(
+                view.context,
+                AppDatabase::class.java, "oneday-db"
+            ).fallbackToDestructiveMigration()
+                .build()
+
+            val hourTaskItemDao = db.hourTaskItemDao()
+
+            var default_id = 1000
+            for (defaultTaskItem in HourBlockContent.DEFAULT_TASKS) {
+                defaultTaskItem.uid = default_id
+                hourTaskItemDao.insert(defaultTaskItem)
+                default_id++
+            }
+
+        }
+
         var selected_date = LocalDate.now()
         if (dateString != "null") {
             selected_date = LocalDate.parse(dateString)
@@ -42,6 +74,8 @@ class HourFragment : Fragment() {
         } else {
             columnCount = 8
         }
+
+
 
         // Set the adapter
         if (view is RecyclerView) {

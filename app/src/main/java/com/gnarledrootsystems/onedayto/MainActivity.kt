@@ -30,20 +30,40 @@ class MainActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.title = "OneDay.to"
         actionBar.subtitle = date
+        //actionBar.setHomeButtonEnabled(true)
+        //actionBar.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        supportFragmentManager.popBackStack()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
 
+
+
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        /*R.id.action_settings -> {
+        android.R.id.home -> {
+            val action = HourTaskFragmentDirections.actionHourTaskFragmentToHourFragment("null")
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(action)
 
             true
-        }*/
+        }
+
+        R.id.action_settings -> {
+
+            val action = HourFragmentDirections.actionHourFragmentToHourTaskFragment()
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(action)
+
+            true
+        }
 
         R.id.action_calendar -> {
             // DatePickerDialog months range from 0-11

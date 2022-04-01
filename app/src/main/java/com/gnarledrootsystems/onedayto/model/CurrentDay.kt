@@ -24,7 +24,8 @@ object CurrentDay {
             val db = Room.databaseBuilder(
                 context,
                 AppDatabase::class.java, "oneday-db"
-            ).build()
+            ).fallbackToDestructiveMigration()
+                .build()
 
             val dayDao = db.dayDao()
 
@@ -50,7 +51,8 @@ object CurrentDay {
             val db = Room.databaseBuilder(
                 context,
                 AppDatabase::class.java, "oneday-db"
-            ).build()
+            ).fallbackToDestructiveMigration()
+                .build()
 
             val dayDao = db.dayDao()
 

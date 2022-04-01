@@ -17,5 +17,28 @@
         <argument
             android:name="date_string"
             app:argType="string" />
+        <action
+            android:id="@+id/action_hourFragment_to_hourTaskFragment"
+            app:destination="@id/hourTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hourTaskFragment"
+        android:name="com.gnarledrootsystems.onedayto.HourTaskFragment"
+        android:label="HourTaskFragment" >
+        <action
+            android:id="@+id/action_hourTaskFragment_to_customHourTaskFragment"
+            app:destination="@id/customHourTaskFragment" />
+        <action
+            android:id="@+id/action_hourTaskFragment_to_hourFragment"
+            app:destination="@id/hourFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customHourTaskFragment"
+        android:name="com.gnarledrootsystems.onedayto.CustomHourTaskFragment"
+        android:label="fragment_custom_hour_task"
+        tools:layout="@layout/fragment_custom_hour_task" >
+        <action
+            android:id="@+id/action_customHourTaskFragment_to_hourTaskFragment"
+            app:destination="@id/hourTaskFragment" />
     </fragment>
 </navigation>
