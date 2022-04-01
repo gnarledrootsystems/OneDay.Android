@@ -38,7 +38,21 @@ class MyHourTaskRecyclerViewAdapter(
         holder.switchTaskVisible.isChecked = !taskItem.isHidden
 
         holder.buttonDelete.setOnClickListener { view ->
+            taskItem.isDeleted = true
+
             runBlocking {
+                val db = Room.databaseBuilder(
+                    holder.itemView.context,
+                    AppDatabase::class.java, "oneday-db"
+                ).fallbackToDestructiveMigration()
+                    .build()
+
+                val hourTaskItemDao = db.hourTaskItemDao()
+
+                hourTaskItemDao.update(taskItem)
+            }
+
+            /*runBlocking {
                 val db = Room.databaseBuilder(
                     view.context,
                     AppDatabase::class.java, "oneday-db"
@@ -48,10 +62,11 @@ class MyHourTaskRecyclerViewAdapter(
                 val hourTaskItemDao = db.hourTaskItemDao()
 
                 hourTaskItemDao.delete(taskItem)
-            }
+            }*/
 
-            values.remove(taskItem)
             notifyItemRemoved(position)
+            values.remove(taskItem)
+
         }
 
         holder.switchTaskVisible.setOnCheckedChangeListener { compoundButton, isVisible ->

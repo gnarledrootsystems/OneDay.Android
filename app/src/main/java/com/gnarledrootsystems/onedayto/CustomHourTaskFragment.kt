@@ -46,18 +46,20 @@ class CustomHourTaskFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         //  create dialog
-        val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
-            .setInitialColor(Color.WHITE)
-            .setColorModel(ColorModel.RGB)
-            .setButtonOkText(android.R.string.ok)
-            .setButtonCancelText(android.R.string.cancel)
-            .onColorSelected { color: Int ->
-                view.textSelectedColor.setBackgroundColor(color)
-                hourTaskItem.color = color
-            }
-            .create()
+
 
         view.buttonColorPicker.setOnClickListener { _ ->
+            val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
+                .setInitialColor(Color.WHITE)
+                .setColorModel(ColorModel.RGB)
+                .setButtonOkText(android.R.string.ok)
+                .setButtonCancelText(android.R.string.cancel)
+                .onColorSelected { color: Int ->
+                    view.textSelectedColor.setBackgroundColor(color)
+                    hourTaskItem.color = color
+                }
+                .create()
+
             colorPicker.show(childFragmentManager, "color_picker")
         }
 
